@@ -1,8 +1,4 @@
-
-from datetime import datetime
-import time
 from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2 as Sampler
-from qiskit.providers.jobstatus import JobStatus
 from dotenv import load_dotenv
 from qiskit import transpile
 import os
@@ -22,7 +18,7 @@ def get_backend_snapshot(backend):
 # Run the circuit and wrap results (counts) with job stats
 def run_and_wrap(circuit, backend, shots):
     sampler = Sampler(mode=backend)
-    transpiled_circuit = transpile(circuit, backend)
+    transpiled_circuit = transpile(circuit, backend, optimization_level=3)
     job = sampler.run([transpiled_circuit], shots=shots)
     result = job.result()
     return {
